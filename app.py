@@ -4,28 +4,24 @@ import os
 
 # Title of the app
 st.title("Quizzy : Live Quiz App")
-st.subheader("Select topic from sidebar and test your knowledge.")
+st.write("Select topic from `sidebar` and test your knowledge. (If you're on mobile, tap the top-left menu to see the sidebar.)")
 
-# Initialize session state for tracking the selected topic
+# Initialize session 
 if 'selected_topic' not in st.session_state:
     st.sidebar.header("Quiz Topics")
     st.session_state.selected_topic = None  # Track the currently selected topic
 
-# List all CSV files in the directory
 quiz_files = [file for file in os.listdir() if file.endswith('.csv')]
 
-# Create a dictionary to store the state of each checkbox
 selected_topics = {}
 for file in quiz_files:
-    topic_name = os.path.splitext(file)[0]  # Remove the .csv extension for display
-    # Check if this topic is the currently selected one
+    topic_name = os.path.splitext(file)[0]  
     is_selected = st.sidebar.checkbox(
         topic_name,
         value=(st.session_state.selected_topic == topic_name),
         key=topic_name
     )
     
-    # If this checkbox is selected, update the session state
     if is_selected:
         if st.session_state.selected_topic != topic_name:
             st.session_state.selected_topic = topic_name  # Update the selected topic
@@ -33,7 +29,7 @@ for file in quiz_files:
             st.rerun()
     selected_topics[topic_name] = is_selected
 
-# Get the selected file based on the session state
+
 selected_file = None
 if st.session_state.selected_topic:
     selected_file = f"{st.session_state.selected_topic}.csv"
@@ -42,7 +38,6 @@ if st.session_state.selected_topic:
 if not selected_file:
     st.info("Please select a quiz topic from the sidebar.")
 else:
-    # Path to the selected CSV file
     csv_file_path = selected_file
 
     # Check if the selected CSV file exists
@@ -53,7 +48,6 @@ else:
             # Load the selected CSV file into a DataFrame
             df = pd.read_csv(csv_file_path)
 
-            # Check if the CSV has the required columns
             required_columns = ['question', 'option1', 'option2', 'option3', 'option4', 'correct_answer']
             if not all(column in df.columns for column in required_columns):
                 st.error(f"CSV must contain the following columns: {', '.join(required_columns)}")
@@ -95,7 +89,6 @@ else:
                             "Result": "Correct" if is_correct else "Incorrect"
                         })
 
-                    # Display results
                     st.subheader("Quiz Results")
                     st.write(f"Your final score is: {score} / {len(df)}")
 
