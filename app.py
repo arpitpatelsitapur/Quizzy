@@ -1,35 +1,18 @@
 import streamlit as st
 import pandas as pd
 import os
-import firebase_admin
-from firebase_admin import credentials, firestore
-
-# Initialize Firebase
-if not firebase_admin._apps:
-    cred = credentials.Certificate("firebase_credentials.json")
-    firebase_admin.initialize_app(cred)
-db = firestore.client()
 
 # Title of the app
-st.title("Live Quiz App")
-
-# Collect user email for identification
-user_email = st.sidebar.text_input("Enter your email to track your quiz results:", "")
-
-# Make email input compulsory
-if not user_email:
-    st.sidebar.warning("⚠️ Email is required to proceed. Please enter your email.")
-    st.stop()  # Stop execution if email is not provided
-else:
-    st.sidebar.success(f"Welcome, {user_email}!")
-
-# Sidebar for topic selection using checkboxes
-st.sidebar.header("Quiz Topics")
-quiz_files = [file for file in os.listdir() if file.endswith('.csv')]  # List all CSV files in the directory
+st.title("Quizzy : Live Quiz App")
+st.subheader("Select topic from sidebar and test your knowledge.")
 
 # Initialize session state for tracking the selected topic
 if 'selected_topic' not in st.session_state:
-    st.session_state.selected_topic = None
+    st.sidebar.header("Quiz Topics")
+    st.session_state.selected_topic = None  # Track the currently selected topic
+
+# List all CSV files in the directory
+quiz_files = [file for file in os.listdir() if file.endswith('.csv')]
 
 # Create a dictionary to store the state of each checkbox
 selected_topics = {}
@@ -47,7 +30,7 @@ for file in quiz_files:
         if st.session_state.selected_topic != topic_name:
             st.session_state.selected_topic = topic_name  # Update the selected topic
             # Uncheck other checkboxes by rerunning the app
-            st.experimental_rerun()
+            st.rerun()
     selected_topics[topic_name] = is_selected
 
 # Get the selected file based on the session state
@@ -85,9 +68,10 @@ else:
                 st.subheader("Answer the following questions:")
                 for idx, row in df.iterrows():
                     question_key = f"q_{idx}"
+                    st.markdown(f"**Q{idx + 1}: {row['question']}**")
                     options = [row['option1'], row['option2'], row['option3'], row['option4']]
                     selected_option = st.radio(
-                        f"**Q{idx + 1}: {row['question']}**",
+                        "",  # Empty label for cleaner UI
                         options,
                         key=question_key
                     )
@@ -111,24 +95,6 @@ else:
                             "Correct Answer": correct_answer,
                             "Result": "Correct" if is_correct else "Incorrect"
                         })
-
-                        # Log the response to Firebase
-                        db.collection('responses').add({
-                            'email': user_email,
-                            'question': row['question'],
-                            'user_answer': user_answer,
-                            'correct_answer': correct_answer,
-                            'is_correct': is_correct,
-                            'timestamp': firestore.SERVER_TIMESTAMP
-                        })
-
-                    # Log the overall score to Firebase
-                    db.collection('scores').add({
-                        'email': user_email,
-                        'score': score,
-                        'total_questions': len(df),
-                        'timestamp': firestore.SERVER_TIMESTAMP
-                    })
 
                     # Display results
                     st.subheader("Quiz Results")
