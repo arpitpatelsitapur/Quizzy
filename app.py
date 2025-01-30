@@ -68,10 +68,9 @@ else:
                 st.subheader("Answer the following questions:")
                 for idx, row in df.iterrows():
                     question_key = f"q_{idx}"
-                    st.markdown(f"**Q{idx + 1}: {row['question']}**")
                     options = [row['option1'], row['option2'], row['option3'], row['option4']]
                     selected_option = st.radio(
-                        "",  # Empty label for cleaner UI
+                        f"**Q{idx + 1}: {row['question']}**",
                         options,
                         key=question_key
                     )
