@@ -6,9 +6,9 @@ import os
 st.title("Quizzy : Live Quiz App")
 st.write("Select topic from `sidebar` and test your knowledge. (If you're on mobile, tap the top-left menu to see the sidebar.)")
 
+st.sidebar.header("Quiz Topics")
 # Initialize session 
 if 'selected_topic' not in st.session_state:
-    st.sidebar.header("Quiz Topics")
     st.session_state.selected_topic = None  # Track the currently selected topic
 
 quiz_files = [file for file in os.listdir() if file.endswith('.csv')]
