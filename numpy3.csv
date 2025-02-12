@@ -19,7 +19,7 @@ Which of these Seaborn functions is used to visualize the distribution of a data
 "What will `np.random.multinomial(5, [0.2, 0.3, 0.5])` return?",A list of 5 normal samples,An array summing to 5 with weighted probabilities,A permutation of 5 values,None,An array summing to 5 with weighted probabilities
 Which distribution is ideal for counting the number of events over a fixed period of time?,Normal,Uniform,Poisson,Binomial,Poisson
 "What is the output shape of the code `np.random.normal(size=(2, 3))`?","`(3,2)`","`(1,2)`","`(2,3)`","` (3,3)`","`(2,3)`"
-What is the difference between np.random.randn() and np.random.normal()?,"randn has scale, normal does not",andn has fixed loc and scale,normal generates only integers,randn generates only floats,randn has fixed loc and scale
+What is the difference between np.random.randn() and np.random.normal()?,"randn has scale, normal does not",randn has fixed loc and scale,normal generates only integers,randn generates only floats,randn has fixed loc and scale
 "In Seaborn, which parameter allows adjusting the number of bins in a histogram?",hue,stat,bins,xlim,bins
 Which distribution is commonly used in survival analysis and reliability engineering?,Rayleigh distribution,Chi-square distribution,Exponential distribution,Log-normal distribution,Exponential distribution
 "What will be the output of `np.random.zipf(a=2, size=5)`?",Poisson-like values,Large integers,Small integers,None,Large integers
