@@ -27,15 +27,15 @@ if 'quiz_state' not in st.session_state:
 
 st.title("🗒️ Quiz: Test Your Numpy Knowledge on Streamlit")
 st.markdown("""
-Self-Assessment: W3Schools NumPy Topics (February 12, 2025)
+Self-Assessment: W3Schools NumPy Topics (February 19, 2025)
 
 Key Topics from W3Schools NumPy Module
 
-https://www.w3schools.com/python/numpy/numpy_random.asp
+https://www.w3schools.com/python/numpy/numpy_ufunc.asp
 
-NumPy Random, Random Intro, Random Permutation,Seaborn Module, Normal Distribution, Binomial Distribution, Poisson Distribution, Uniform Distribution, Logistic Distribution, Multinomial Distribution, Exponential Distribution, Chi Square Distribution, Rayleigh Distribution, Pareto Distribution, Zipf Distribution
+NumPy ufunc ufun Intro, ufunc Create Function, ufunc Simple Arithmetic, ufunc Rounding Decimals, ufunc Logs, ufunc Summations, ufunc Products, ufunc Differences, ufunc Finding LCM, ufunc Finding GCD, ufunc Trigonometric, ufunc Hyperbolic, ufunc Set Operations
 """)
-QUESTIONS_FILE = "numpy3.csv"
+QUESTIONS_FILE = "numpy4.csv"
 
 # --- Main Quiz Logic ---
 def load_questions():
